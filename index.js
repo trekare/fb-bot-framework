@@ -134,7 +134,6 @@ FBBotFramework.prototype.sendImageMessage = function (recipient, imageUrl, notif
 };
 
 FBBotFramework.prototype.sendButtonMessage = function (recipient, text, buttons, notificationType, cb) {
-
     var messageData = {
         attachment: {
             type: "template",
@@ -149,6 +148,19 @@ FBBotFramework.prototype.sendButtonMessage = function (recipient, text, buttons,
     this.send(recipient, messageData, notificationType, cb);
 };
 
+// Quick replies object limitation
+// Maximum 11 quick replies
+// Title: 20 characters
+// image_url should be at least 24x24 and will be cropped and resized
+
+FBBotFramework.prototype.sendQuickReplyTextMessage = function (recipient, text, replies, notificationType, cb) {
+    var messageData = {
+        text: text,
+        quick_replies: replies,
+    };
+
+    this.send(recipient, messageData, notificationType, cb);
+};
 
 // Limitation
 // Title: 45 characters

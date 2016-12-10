@@ -179,6 +179,35 @@ var buttons = [
 bot.sendButtonMessage(recipient, text, buttons);
 ```
 
+#### ```bot.sendQuickReplyTextMessage(userId, text, replies, notificationType, cb)```
+Send a message with quick replies to a specific user.
+* ```userId``` - The recipient's Facebook Id
+* ```text``` - The title of the message
+* ```replies``` - The quick replies of the message
+* ```notificationType``` - Optional, push notification type: REGULAR (default), SILENT_PUSH, NO_PUSH
+* ```cb``` - Optional, callback with arguments of ```err``` and ```result```.
+
+```js
+var text = "What do you want to do next?";
+var replies = [
+    {
+        "content_type":"location",
+    },
+    {
+        "content_type": "text",
+        "title": "Show Website",
+        "payload": "USER_DEFINED_PAYLOAD"
+    },
+    {
+        "content_type": "text",
+        "title": "Start Chatting",
+        "payload": "USER_DEFINED_PAYLOAD",
+        "image_url": "http://petersfantastichats.com/img/green.png"
+    }
+];
+bot.sendQuickReplyTextMessage(recipient, text, replies);
+```
+
 #### ```bot.sendGenericMessage(userId, elements, notificationType, cb)```
 Send a message with bubbles(horizontal scroll cards) to a specific user.
 * ```userId``` - The recipient's Facebook Id

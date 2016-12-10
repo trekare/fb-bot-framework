@@ -223,6 +223,50 @@ describe('Send API', function () {
 
     });
 
+    it('should send quick reply text message', function (done) {
+
+        var text = "What do you want to do next?";
+        var replies = [
+            {
+                "content_type":"location",
+            },
+            {
+                "content_type": "text",
+                "title": "Show Website",
+                "payload": "USER_DEFINED_PAYLOAD"
+            },
+            {
+                "content_type": "text",
+                "title": "Start Chatting",
+                "payload": "USER_DEFINED_PAYLOAD",
+                "image_url": "http://petersfantastichats.com/img/green.png"
+            }
+        ];
+
+        var payload = {
+            "recipient": {
+                "id": recipient
+            },
+            "message": {
+                "text": text,
+                "quick_replies": replies,
+            }
+        };
+
+        nock('https://graph.facebook.com')
+            .post('/v2.6/me/messages', payload)
+            .query({access_token: bot.page_token})
+            .reply(200, dummyResponse);
+
+        bot.sendQuickReplyTextMessage(recipient, text, replies, function (err, result) {
+            expect(err).to.be.null;
+            expect(result).to.deep.equal(dummyResponse);
+            done();
+
+        });
+
+    });
+
     it('should send generic/bubble message', function (done) {
 
         var elements = [
