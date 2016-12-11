@@ -84,9 +84,10 @@ Triggered when an user clicks a button which will send a postback message.
 
 
 ### Functions
-#### ```bot.setGreetingText(text, cb)```
-Set the greeting message for new conversations.
+#### ```bot.setGreetingText(text, replies, cb)```
+Set the greeting message and quick replies (optional) for new conversations.
 * ```text``` - The greeting text
+* ```replies``` - The quick replies of the message (optional)
 * ```cb``` - Optional, callback with arguments of ```err``` and ```result```.
 
 #### ```bot.setGetStartedButton(payload, cb)```

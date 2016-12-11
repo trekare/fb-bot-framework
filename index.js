@@ -273,9 +273,7 @@ FBBotFramework.prototype.middleware = function () {
 };
 
 
-FBBotFramework.prototype.setGreetingText = function (text, cb) {
-
-
+FBBotFramework.prototype.setGreetingText = function (text, replies, cb) {
     var req = {
         url: FB_SETTINGS_ENDPOINT,
         qs: {access_token: this.page_token},
@@ -287,6 +285,12 @@ FBBotFramework.prototype.setGreetingText = function (text, cb) {
             }
         }
     };
+
+    if (typeof replies === 'function') {
+        cb = replies;
+    } else {
+        req.json.greeting.quick_replies = replies;
+    }
 
     request(req, function (err, res, body) {
         if (cb) {

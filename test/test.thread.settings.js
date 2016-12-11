@@ -44,6 +44,45 @@ describe('Thread Settings APIs', function () {
 
     });
 
+    it('should set the Greeting Text and quick replies', function (done) {
+
+        var text = "hello world!";
+
+        var payload = {
+            setting_type: "greeting",
+            greeting: {text: text}
+        };
+
+        var replies = [
+            {
+                "content_type":"location",
+            },
+            {
+                "content_type": "text",
+                "title": "Show Website",
+                "payload": "USER_DEFINED_PAYLOAD"
+            },
+            {
+                "content_type": "text",
+                "title": "Start Chatting",
+                "payload": "USER_DEFINED_PAYLOAD",
+                "image_url": "http://petersfantastichats.com/img/green.png"
+            }
+        ];
+
+        nock('https://graph.facebook.com')
+            .post('/v2.6/me/thread_settings', payload)
+            .query({access_token: bot.page_token})
+            .reply(200, dummyResponse);
+
+        bot.setGreetingText(text, replies, function (err, result) {
+            expect(err).to.be.null;
+            expect(result).to.deep.equal(dummyResponse);
+            done();
+        });
+
+    });
+
     it('should set the Get Started Button', function (done) {
 
         var successfulResponse = {
